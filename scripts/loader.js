@@ -58,5 +58,5 @@ window.addEventListener("load", function () {
     this.setTimeout(function(){
       document.querySelector(".home-picture").classList.remove("no-opacity");
     }, 1200)
-  }, 4100);
+  }, 2100);
 });

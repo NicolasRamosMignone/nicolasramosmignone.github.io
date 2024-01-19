@@ -21,13 +21,13 @@ var loader = document.getElementById("preloader");
 
 function fadeOut(element) {
   let opacity = 1;
-  if (window.innerWidth > 991) {
-    console.log(distanceX + "-" + distanceY);
+  //if (window.innerWidth > 991) {
+    //console.log(distanceX + "-" + distanceY);
     //preloaderText.style.transform =
       //"translate(" + distanceX + "px, " + distanceY + "px)";
    // preloaderText.classList.add("intoEye");
-    preloaderText.style.fontSize = "8px";
-  } else preloaderText.style.fontSize = "1px";
+    //preloaderText.style.fontSize = "8px";
+  //} else preloaderText.style.fontSize = "1px";
   this.setTimeout(function () {
     function decreaseOpacity() {
       if (opacity <= 0) {

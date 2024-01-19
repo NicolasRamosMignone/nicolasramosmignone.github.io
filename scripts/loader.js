@@ -2,16 +2,16 @@ preloaderText = document.getElementById("preloader-text");
 eye = document.querySelector(".eye");
 
 // Get the target element's position
-var targetRect = eye.getBoundingClientRect();
-var targetX = targetRect.left + window.scrollX;
-var targetY = targetRect.top + window.scrollY;
+//var targetRect = eye.getBoundingClientRect();
+//var targetX = targetRect.left + window.scrollX;
+//var targetY = targetRect.top + window.scrollY;
 
 // Calculate the distance between the source and target elements
-var distanceX = targetX - preloaderText.offsetLeft;
-var distanceY = targetY - preloaderText.offsetTop;
+//var distanceX = targetX - preloaderText.offsetLeft;
+//var distanceY = targetY - preloaderText.offsetTop;
 
-distanceX -= (preloaderText.offsetWidth - eye.offsetWidth) / 2;
-distanceY -= (preloaderText.offsetHeight - eye.offsetHeight) / 2;
+//distanceX -= (preloaderText.offsetWidth - eye.offsetWidth) / 2;
+//distanceY -= (preloaderText.offsetHeight - eye.offsetHeight) / 2;
 
 this.setTimeout(function () {
   preloaderText.classList.add("fade-in");

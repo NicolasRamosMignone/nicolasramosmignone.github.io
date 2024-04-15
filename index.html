@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css?family=Teko"
     />
   </head>
-  <body id="body" class="scroll-disabled">
+  <body id="body">
     <div id="preloader">
       <p class="hidden" id="preloader-text">NICOLÁS RAMOS</p>
       <svg
@@ -77,7 +77,8 @@
       <p class="work-text-title">PlugFinder</p>
       <p class="work-text-tools">React Native · Springboot · Android Studio</p>
       <p class="work-text-text">
-        Mobile App for electric car users, allowing them to search and book chargers that suit up their circumstances.
+        Mobile App for electric car users, allowing them to search and book
+        chargers that suit up their circumstances.
       </p>
       <p class="work-text-type">Android App</p>
     </div>
@@ -87,21 +88,22 @@
       <p class="work-text-title">Taiga IssueTracker</p>
       <p class="work-text-tools">React · Springboot</p>
       <p class="work-text-text">
-        Web App that allow users to manage issues that may appear in a project they are working on.
+        Web App that allow users to manage issues that may appear in a project
+        they are working on.
       </p>
       <p class="work-text-type">Web App</p>
     </div>
-    
+
     <div class="flyout-text no-opacity">
       <p class="work-text-id">03</p>
       <p class="work-text-title">FlyOut</p>
       <p class="work-text-tools">JavaScript · WordPress</p>
       <p class="work-text-text">
-        Startup Web with different pages such as an AirTrack customizer with built-in payment methods.
+        Startup Web with different pages such as an AirTrack customizer with
+        built-in payment methods.
       </p>
       <p class="work-text-type">Web Page</p>
     </div>
-
 
     <div id="scroll">
       <section id="home" class="home">
@@ -215,7 +217,7 @@
         </div>
       </section>
       <section id="work" class="work">
-        <div class="plugfinder">
+        <div id="plugfinder-section" class="plugfinder">
           <img
             class="plugfinder-mockup-1"
             src="./assets/mockups/plugfinder-welcome-iphone.png"
@@ -237,7 +239,7 @@
             alt=""
           />
         </div>
-        <div class="taiga">
+        <div id="taiga-section" class="taiga">
           <img
             class="taiga-mockup-1"
             src="./assets/mockups/taiga-issues-laptop.png"
@@ -254,7 +256,7 @@
             alt=""
           />
         </div>
-        <div class="flyout">
+        <div id="flyout-section" class="flyout">
           <img
             class="flyout-mockup-1"
             src="./assets/mockups/flyout-page-laptop.png"
@@ -272,7 +274,6 @@
             src="./assets/mockups/flyout-page2-laptop.png"
             alt=""
           />
-
         </div>
 
         <div class="work-end"></div>
@@ -311,8 +312,13 @@
             <button class="sendButton">Send</button>
           </div>
           <h4>EMAIL</h4>
-          <p>nicolasramosmignone@gmail.com</p>
-          <a href="" target="_blank">
+          <p href="mailto:nicolasramosmignone@gmail.com">
+            nicolasramosmignone@gmail.com
+          </p>
+          <a
+            href="./assets/files/Nicolas_Ramos_Mignone-Resume.pdf"
+            target="_blank"
+          >
             <img
               id="cv-icon2"
               src="./assets/skillLogos/cv-icon.png"
@@ -349,6 +355,17 @@
     <script src="./scripts/loader.js"></script>
     <script src="./scripts/titlesAnimation.js"></script>
     <script src="./scripts/scroll.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      (function () {
+        emailjs.init({
+          publicKey: "0wmKtqmTMDy-iBuPi",
+        });
+      })();
+    </script>
 
     <script id="contact_form_sending">
       let sendButton = document.querySelector(".sendButton");
@@ -370,18 +387,29 @@
           "message:\n" +
           message;
         console.log(body);
-        Email.send({
-          SecureToken: "5ec942e9-6951-4756-9eed-eb6d3877dbdd",
-          To: "nicolasramosmignone@gmail.com",
-          From: "nicoramos.bcn@gmail.com",
-          Subject: "CONTACT-MESSAGE",
-          Body: body,
-        }).then((message) => alert("message sent successfully!"));
+        var params = {
+          message: body,
+          from_name: name,
+          email_id: email,
+        };
+        emailjs
+          .send("portfolio", "template_ljrfq58", params)
+          .then((message) => alert("message sent successfully!"));
+        // Email.send({
+        //   SecureToken: "5ec942e9-6951-4756-9eed-eb6d3877dbdd",
+        //   To: "nicolasramosmignone@gmail.com",
+        //   From: "nicoramos.bcn@gmail.com",
+        //   Subject: "CONTACT-MESSAGE",
+        //   Body: body,
+        // }).then((message) => alert("message sent successfully!"));
       });
     </script>
     <script>
       window.onload = function () {
-        window.scrollTo(0, 0);
+        window.scrollTo({
+          top: 0,
+          behavior: "instant",
+        });
         var pageWidth =
           window.innerWidth ||
           document.documentElement.clientWidth ||
@@ -396,55 +424,122 @@
       };
     </script>
     <script>
-      let plugfinder = false;
-      let taiga = false;
-      let flyout = false;
-      $(window).scroll(function (e) {
-        var scrolled = $(window).scrollTop();
+      $(document).ready(function () {
+        let plugfinder = false;
+        let taiga = false;
+        let flyout = false;
 
-        $(".home-picture").css("top", +(scrolled * 0.25) - 230 + "px");
-        console.log(scrolled);
+        // Function to update scroll thresholds based on screen size
+        function updateScrollThresholds() {
+          var plugfinderStart = $("#plugfinder-section").position().top;
+          var plugfinderEnd =
+            plugfinderStart + $("#plugfinder-section").outerHeight();
 
-        if (scrolled >= 1800 && scrolled < 3300 && !plugfinder) {
-          document
-            .querySelector(".plugfinder-text")
-            .classList.remove("no-opacity");
-          plugfinder = true;
-        } else if (plugfinder && (scrolled < 1800 || scrolled >= 3300)) {
-          plugfinder = false;
-          document
-            .querySelector(".plugfinder-text")
-            .classList.add("no-opacity");
+          var taigaStart = $("#taiga-section").position().top;
+          var taigaEnd = taigaStart + $("#taiga-section").outerHeight();
+
+          var flyoutStart = $("#flyout-section").position().top;
+          var flyoutEnd = flyoutStart + $("#flyout-section").outerHeight();
+
+          $(window).scroll(function () {
+            var scrolled = $(window).scrollTop();
+
+            // Update positions for animations
+            $(".home-picture").css("top", +(scrolled * 0.25) - 230 + "px");
+
+            if (
+              scrolled < plugfinderStart - 100 ||
+              scrolled > flyoutEnd + 100
+            ) {
+              $(".plugfinder-text").addClass("no-display");
+              $(".taiga-text").addClass("no-display");
+              $(".flyout-text").addClass("no-display");
+            } else {
+              $(".plugfinder-text").removeClass("no-display");
+              $(".taiga-text").removeClass("no-display");
+              $(".flyout-text").removeClass("no-display");
+            }
+
+            // Plugfinder visibility toggle
+            if (
+              scrolled >= plugfinderStart &&
+              scrolled < plugfinderEnd &&
+              !plugfinder
+            ) {
+              $(".plugfinder-text").removeClass("no-opacity");
+              plugfinder = true;
+            } else if (
+              plugfinder &&
+              (scrolled < plugfinderStart || scrolled >= plugfinderEnd)
+            ) {
+              plugfinder = false;
+              $(".plugfinder-text").addClass("no-opacity");
+            }
+
+            // Taiga visibility toggle
+            if (scrolled >= taigaStart && scrolled < taigaEnd && !taiga) {
+              $(".taiga-text").removeClass("no-opacity");
+              taiga = true;
+            } else if (
+              taiga &&
+              (scrolled < taigaStart || scrolled >= taigaEnd)
+            ) {
+              taiga = false;
+              $(".taiga-text").addClass("no-opacity");
+            }
+
+            // Flyout visibility toggle
+            if (scrolled >= flyoutStart && scrolled < flyoutEnd && !flyout) {
+              $(".flyout-text").removeClass("no-opacity");
+              flyout = true;
+            } else if (
+              flyout &&
+              (scrolled < flyoutStart || scrolled >= flyoutEnd)
+            ) {
+              flyout = false;
+              $(".flyout-text").addClass("no-opacity");
+            }
+
+            $(".plugfinder-mockup-1").css(
+              "top",
+              -(scrolled * 0.6) + 1650 + "px"
+            );
+            $(".plugfinder-mockup-2").css(
+              "top",
+              -(scrolled * 0.4) + 1650 + "px"
+            );
+            $(".plugfinder-mockup-3").css("top", -(scrolled * 0) + 350 + "px");
+            $(".plugfinder-mockup-4").css(
+              "top",
+              -(scrolled * 0.35) + 1550 + "px"
+            );
+
+            $(".taiga-mockup-1").css("top", -(scrolled * 0.6) + 2950 + "px");
+            $(".taiga-mockup-2").css("top", -(scrolled * 0.35) + 2000 + "px");
+            $(".taiga-mockup-3").css("top", -(scrolled * 0) + 900 + "px");
+
+            $(".flyout-mockup-1").css("top", -(scrolled * 0.6) + 3850 + "px");
+            $(".flyout-mockup-2").css("top", -(scrolled * 0.35) + 2400 + "px");
+            $(".flyout-mockup-3").css("top", -(scrolled * 0) + 900 + "px");
+          });
         }
 
-        if (scrolled >= 3350 && scrolled < 4900 && !taiga) {
-          document.querySelector(".taiga-text").classList.remove("no-opacity");
-          taiga = true;
-        } else if (taiga && (scrolled < 3350 || scrolled >= 4900)) {
-          taiga = false;
-          document.querySelector(".taiga-text").classList.add("no-opacity");
-        }
-
-        if (scrolled >= 4950 && scrolled < 6700 && !flyout) {
-          document.querySelector(".flyout-text").classList.remove("no-opacity");
-          flyout = true;
-        } else if (flyout && (scrolled < 4950|| scrolled >= 6700)) {
-          flyout = false;
-          document.querySelector(".flyout-text").classList.add("no-opacity");
-        }
-
-        $(".plugfinder-mockup-1").css("top", -(scrolled * 0.6) + 1650 + "px");
-        $(".plugfinder-mockup-2").css("top", -(scrolled * 0.4) + 1650 + "px");
-        $(".plugfinder-mockup-3").css("top", -(scrolled * 0) + 350 + "px");
-        $(".plugfinder-mockup-4").css("top", -(scrolled * 0.35) + 1850 + "px");
-
-        $(".taiga-mockup-1").css("top", -(scrolled * 0.6) + 2650 + "px");
-        $(".taiga-mockup-2").css("top", -(scrolled * 0.35) + 2000 + "px");
-        $(".taiga-mockup-3").css("top", -(scrolled * 0) + 900 + "px");
-
-        $(".flyout-mockup-1").css("top", -(scrolled * 0.6) + 4050 + "px");
-        $(".flyout-mockup-2").css("top", -(scrolled * 0.35) + 3000 + "px");
-        $(".flyout-mockup-3").css("top", -(scrolled * 0) + 1300 + "px");
+        // Call initially and on window resize
+        updateScrollThresholds();
+        $(window).resize(updateScrollThresholds());
+        let resizeTimer;
+        window.addEventListener("resize", function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function () {
+            // Scroll to the top of the page
+            $("#body").addClass("no-opacity");
+            window.scrollTo(0, 0);
+            // Reload the page
+            setTimeout(function () {
+              location.reload();
+            }, 750);
+          }, 500); // Adjust delay as necessary
+        });
       });
     </script>
   </body>

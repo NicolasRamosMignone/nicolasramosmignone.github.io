@@ -21,13 +21,13 @@ var loader = document.getElementById("preloader");
 
 function fadeOut(element) {
   let opacity = 1;
-  //if (window.innerWidth > 991) {
-    //console.log(distanceX + "-" + distanceY);
-    //preloaderText.style.transform =
-      //"translate(" + distanceX + "px, " + distanceY + "px)";
-   // preloaderText.classList.add("intoEye");
-    //preloaderText.style.fontSize = "8px";
-  //} else preloaderText.style.fontSize = "1px";
+  if (/*window.innerWidth > 991*/ false) {
+    console.log(distanceX + "-" + distanceY);
+    preloaderText.style.transform =
+      "translate(" + distanceX + "px, " + distanceY + "px)";
+    preloaderText.classList.add("intoEye");
+    preloaderText.style.fontSize = "8px";
+  } else preloaderText.style.fontSize = "0px";
   this.setTimeout(function () {
     function decreaseOpacity() {
       if (opacity <= 0) {
@@ -55,8 +55,8 @@ window.addEventListener("load", function () {
       document.querySelector("#side-buttons").classList.remove("no-opacity");
     }, 2200);
 
-    this.setTimeout(function(){
+    this.setTimeout(function () {
       document.querySelector(".home-picture").classList.remove("no-opacity");
-    }, 1200)
-  }, 2100);
+    }, 1200);
+  }, 4100);
 });

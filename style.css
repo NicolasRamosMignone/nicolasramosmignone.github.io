@@ -368,7 +368,7 @@ header a:hover {
   top: 20px;
   background-color: #181818;
   border-radius: 50%;
-  z-index: 100;
+  z-index: 99;
 }
 
 .toggleMenu-bars {
@@ -967,7 +967,7 @@ footer p {
 
   .toggleMenu {
     display: flex;
-    z-index: 100;
+    z-index: 99;
   }
 
   header {
@@ -1443,6 +1443,35 @@ footer p {
   }
   .home-picture {
     left: -35vh;
+  }
+}
+
+@media (max-width: 400px) {
+  .work-text-id {
+    margin-top: 60px;
+    margin-left: 10%;
+    font-size: 1.25rem;
+  }
+
+  .work-text-title {
+    color: #d2b48c;
+    margin-top: -34px;
+    font-size: 1.75rem;
+  }
+
+  .work-text-tools {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+
+  .work-text-text {
+    font-size: 0.75rem;
+    max-width: 66vw;
+  }
+  .work-text-type {
+    margin-left: 20%;
+    font-size: 1.25rem;
+    margin-top: 75px;
   }
 }
 

@@ -52,7 +52,7 @@
 
     <header>
       <nav>
-        <a class="header-element1" href="#">HOME</a>
+        <a class="header-element1" href="#home">HOME</a>
         <a class="header-element" href="#about">ABOUT</a>
         <a class="header-element" id="logo" href="">
           <div class="eye">
@@ -64,7 +64,7 @@
             <span class="eyelashes"></span>
           </div>
         </a>
-        <a class="header-element" href="#portfolio">WORK</a>
+        <a class="header-element" href="#work">WORK</a>
         <a class="header-element" href="#contact">CONTACT</a>
       </nav>
     </header>
@@ -366,6 +366,36 @@
         });
       })();
     </script>
+    <script>
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          // Get the target element
+          const targetId = this.getAttribute("href");
+          const targetElement = document.querySelector(targetId);
+
+          if (targetElement) {
+            // Calculate position with respect to the container's current transform
+            const container = document.querySelector("#scroll");
+            const containerStyle = window.getComputedStyle(container);
+            const transformMatrix =
+              containerStyle.transform || containerStyle.webkitTransform;
+            const matrixValues = transformMatrix
+              .match(/matrix.*\((.+)\)/)[1]
+              .split(", ");
+            const translateY = parseFloat(matrixValues[5]);
+
+            var targetPosition =
+              targetElement.getBoundingClientRect().top + window.pageYOffset;
+
+            // Use the custom scroll method to navigate
+            if (targetId === "#work") targetPosition += 150;
+            window.scrollTo(targetPosition, targetPosition); // You would need to implement this method
+          }
+        });
+      });
+    </script>
 
     <script id="contact_form_sending">
       let sendButton = document.querySelector(".sendButton");
@@ -527,19 +557,19 @@
         // Call initially and on window resize
         updateScrollThresholds();
         $(window).resize(updateScrollThresholds());
-        let resizeTimer;
-        window.addEventListener("resize", function () {
-          clearTimeout(resizeTimer);
-          resizeTimer = setTimeout(function () {
-            // Scroll to the top of the page
-            $("#body").addClass("no-opacity");
-            window.scrollTo(0, 0);
-            // Reload the page
-            setTimeout(function () {
-              location.reload();
-            }, 750);
-          }, 500); // Adjust delay as necessary
-        });
+        // let resizeTimer;
+        // window.addEventListener("resize", function () {
+        //   clearTimeout(resizeTimer);
+        //   resizeTimer = setTimeout(function () {
+        //     // Scroll to the top of the page
+        //     $("#body").addClass("no-opacity");
+        //     window.scrollTo(0, 0);
+        //     // Reload the page
+        //     setTimeout(function () {
+        //       location.reload();
+        //     }, 750);
+        //   }, 500); // Adjust delay as necessary
+        // });
       });
     </script>
   </body>
